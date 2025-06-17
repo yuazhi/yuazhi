@@ -1,2 +1,2 @@
 ![Metrics](/github-metrics.svg)
-![Metrics](/metrics.introduction.svg)
+![Metrics](/metrics.followup.svg)
