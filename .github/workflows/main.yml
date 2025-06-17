@@ -7,35 +7,28 @@ on:
   workflow_dispatch:
   push: {branches: ["master", "main"]}
 jobs:
-  # 生成等距日历的作业
-  metrics-isocalendar:
+  github-metrics:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: lowlighter/metrics@latest
         with:
+          # Your GitHub token
+          # The following scopes are required:
+          #  - public_access (default scope)
+          # The following additional scopes may be required:
+          #  - read:org      (for organization related metrics)
+          #  - read:user     (for user related data)
+          #  - read:packages (for some packages related data)
+          #  - repo          (optional, if you want to include private repositories)
           token: ${{ secrets.METRICS_TOKEN }}
+
+          # Options
           template: classic
-          filename: metrics.isocalendar.svg
-          base: ""
+          base: header, activity, community, repositories, metadata
           config_timezone: Asia/Shanghai
+          plugin_calendar: yes
+          plugin_calendar_limit: 2
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
-  
-  # 生成贡献图的作业
-  metrics-contribution:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: lowlighter/metrics@latest
-        with:
-          token: ${{ secrets.METRICS_TOKEN }}
-          template: classic
-          filename: metrics.contribution.svg
-          base: ""
-          config_timezone: Asia/Shanghai
-          plugin_contribution: yes
-          plugin_contribution_categories: yes
-          plugin_contribution_activity: yes
